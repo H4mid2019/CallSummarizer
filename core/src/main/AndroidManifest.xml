@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Library module: no components, just shared code. Namespace is set in build.gradle. -->
+<manifest />

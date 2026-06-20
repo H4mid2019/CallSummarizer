@@ -4,6 +4,16 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+    // Declare plugin versions once here so every module (:app, :core, :wear) can apply them by id
+    // without repeating versions (and without version-conflict errors across modules).
+    plugins {
+        id 'com.android.application' version '9.2.1'
+        id 'com.android.library' version '9.2.1'
+        id 'org.jetbrains.kotlin.android' version '2.2.10'
+        id 'org.jetbrains.kotlin.plugin.compose' version '2.2.10'
+        id 'io.gitlab.arturbosch.detekt' version '1.23.7'
+        id 'com.diffplug.spotless' version '6.25.0'
+    }
 }
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
@@ -15,5 +25,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "CallSummarizer"
+rootProject.name = "Vocalis"
 include ':app'
+include ':core'
+include ':wear'

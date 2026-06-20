@@ -1,0 +1,36 @@
+// Shared module reused by both :app (phone) and :wear (watch).
+// Plugin versions come from :app's classpath (AGP + Kotlin already requested there), so they are
+// applied here WITHOUT a version to satisfy Gradle's "declare a plugin version once" rule.
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'website.ahdesign.vocalis.core'
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 26 // <= both consumers (:app=26, :wear=30)
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    // Online pipeline (Deepgram WS + OpenRouter). `api` so consumers (:app, :wear) see okhttp types
+    // exposed in the helper signatures (OkHttpClient, WebSocket). org.json is provided by the
+    // Android platform at runtime; the JVM stub throws "not mocked", so the real artifact is
+    // added for unit tests.
+    api 'com.squareup.okhttp3:okhttp:5.0.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'com.google.truth:truth:1.4.4'
+    testImplementation 'org.json:json:20240303'
+}

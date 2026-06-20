@@ -1,16 +1,17 @@
 plugins {
-    id 'com.android.application' version '9.1.1'
-    id 'org.jetbrains.kotlin.android' version '2.2.10'
-    id 'io.gitlab.arturbosch.detekt' version '1.23.7'
-    id 'com.diffplug.spotless' version '6.25.0'
+    // Versions are declared centrally in settings.gradle (pluginManagement.plugins).
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'io.gitlab.arturbosch.detekt'
+    id 'com.diffplug.spotless'
 }
 
 android {
-    namespace 'com.example.callsummarizer'
+    namespace 'website.ahdesign.vocalis'
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.example.callsummarizer"
+        applicationId "website.ahdesign.vocalis"
         minSdk 26
         targetSdk 36
         versionCode 1
@@ -78,6 +79,9 @@ spotless {
 }
 
 dependencies {
+    // Shared pure logic + watch<->phone contract (also consumed by :wear)
+    implementation project(':core')
+
     implementation 'androidx.core:core-ktx:1.18.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.google.android.material:material:1.13.0'
@@ -86,8 +90,15 @@ dependencies {
     // Live transcription (WebSocket) + LLM HTTP calls
     implementation 'com.squareup.okhttp3:okhttp:5.0.0'
 
+    // Wear companion: receive audio/results from the watch over the Data Layer
+    implementation 'com.google.android.gms:play-services-wearable:18.2.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.1'
+
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1'
+
+    // lifecycleScope + repeatOnLifecycle for observing watch-session state in the UI
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.7'
 
     // JVM unit tests. The Android SDK's org.json is stubbed on the JVM (throws
     // "Method not mocked"), so we add the real artifact for tests only.
