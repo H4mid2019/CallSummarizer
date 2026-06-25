@@ -35,9 +35,9 @@ import java.io.InputStream
  * The brain. Reads PCM from the watch and produces [Turn]s, choosing the engine by connectivity.
  * The output contract is identical online and offline, so the watch UI is engine-agnostic.
  *
- * ONLINE  → the SAME two-service flow CallService uses for phone calls, via the shared :core
+ * ONLINE  -> the SAME two-service flow CallService uses for phone calls, via the shared :core
  *           helpers (Deepgram WS -> buildPrompt -> OpenRouter).
- * OFFLINE → delegate to [OnDeviceEngine] (gemma-4-e4b-it audio-in, or ML Kit translate fallback).
+ * OFFLINE -> delegate to [OnDeviceEngine] (gemma-4-e4b-it audio-in, or ML Kit translate fallback).
  */
 class Pipeline(
     private val context: Context,
@@ -47,7 +47,7 @@ class Pipeline(
 
     /**
      * Consume the watch's PCM stream. Each utterance is saved (under one session id) + forwarded via
-     * [onTurn]; when the session (one listen→stop cycle) ends, an LLM produces a short topic tag.
+     * [onTurn]; when the session (one listen->stop cycle) ends, an LLM produces a short topic tag.
      */
     suspend fun process(
         pcm: InputStream,
@@ -120,30 +120,23 @@ class Pipeline(
         val pump =
             launch(Dispatchers.IO) {
                 val buffer = ByteArray(BUFFER_BYTES)
-                var readBytes = 0
-                var sentBytes = 0
                 try {
                     while (isActive) {
                         val n = pcm.read(buffer)
                         if (n < 0) break
-                        if (n > 0) {
-                            readBytes += n
-                            // The watch already drops silence; forward everything to Deepgram.
-                            if (socket.send(buffer.toByteString(0, n))) sentBytes += n
-                        }
+                        // The watch already drops silence; forward everything to Deepgram.
+                        if (n > 0) socket.send(buffer.toByteString(0, n))
                     }
-                } catch (e: IOException) {
-                    Log.w(TAG, "audio pump ended: ${e.message}") // channel closed (e.g. user hit Stop)
+                } catch (ignored: IOException) {
+                    // Channel closed (the user stopped). Expected.
                 } finally {
-                    Log.i(TAG, "pump done: read=$readBytes sent=$sentBytes bytes to Deepgram")
                     socket.close(WS_NORMAL_CLOSURE, "stream ended")
                     transcripts.close()
                 }
             }
 
-        // Consume transcripts in the main coroutine — it only suspends on receive, never blocks.
+        // Consume transcripts in the main coroutine - it only suspends on receive, never blocks.
         for (text in transcripts) {
-            Log.i(TAG, "transcript -> LLM: '$text'")
             val prompt = buildPrompt(settings.sourceLanguage, settings.replyScript, IN_PERSON_CONTEXT, text)
             val answer =
                 runCatching {
@@ -152,7 +145,6 @@ class Pipeline(
                     Log.e(TAG, "OpenRouter failed for '$text'", it)
                     continue
                 }
-            Log.i(TAG, "reply='${answer.reply}' meaning='${answer.translation}'")
             onTurn(Turn(text, answer.translation, Suggestion(answer.reply), Engine.ONLINE, now()))
         }
         pump.join()

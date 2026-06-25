@@ -10,7 +10,7 @@ import website.ahdesign.vocalis.Suggestion
 import website.ahdesign.vocalis.Turn
 import java.io.File
 
-/** One conversation session (a listen→stop cycle) with its turns and an LLM topic tag. */
+/** One conversation session (a listen->stop cycle) with its turns and an LLM topic tag. */
 data class Session(
     val id: Long,
     val startTs: Long,
@@ -21,8 +21,8 @@ data class Session(
 
 /**
  * History lives on the PHONE as two append-only JSON-lines files in app storage:
- *  - `history.jsonl`  — one turn per line, each stamped with its `sessionId`.
- *  - `sessions.jsonl` — one record per finished session: {id, startTs, endTs, tag, turnCount}.
+ *  - `history.jsonl`  - one turn per line, each stamped with its `sessionId`.
+ *  - `sessions.jsonl` - one record per finished session: {id, startTs, endTs, tag, turnCount}.
  * [sessions] joins them (newest session first). [HistorySync] optionally uploads turns.
  */
 class HistoryStore(
@@ -73,7 +73,6 @@ class HistoryStore(
                     .put("turnCount", turnCount)
                     .toString()
             runCatching { sessionsFile.appendText("$line\n") }
-                .onSuccess { Log.i(TAG, "saved session '$tag' ($turnCount turns)") }
                 .onFailure { Log.e(TAG, "session write failed", it) }
         }
     }

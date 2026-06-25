@@ -3,7 +3,7 @@ name: Release
 # Builds signed phone + watch APKs and attaches them to a GitHub Release.
 # Trigger: push a tag like `v1.0.0`, or run manually (manual runs only upload artifacts).
 #
-# Required repo secrets (Settings → Secrets and variables → Actions):
+# Required repo secrets (Settings -> Secrets and variables -> Actions):
 #   KEYSTORE_BASE64   base64 of vocalis-release.jks  (PowerShell:
 #                       [Convert]::ToBase64String([IO.File]::ReadAllBytes("vocalis-release.jks")))
 #   KEYSTORE_PASSWORD store password  (see keystore.properties)

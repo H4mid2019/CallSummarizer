@@ -10,7 +10,7 @@ data class LlmAnswer(
 /**
  * Parse the JSON object the LLM returns, with a safe fallback if the model
  * misbehaves and emits plain text or wraps the JSON in code fences.
- * Pure function — shared by the online (OpenRouter) and offline (on-device LLM) paths.
+ * Pure function - shared by the online (OpenRouter) and offline (on-device LLM) paths.
  */
 fun parseLlmAnswer(raw: String): LlmAnswer {
     val cleaned =

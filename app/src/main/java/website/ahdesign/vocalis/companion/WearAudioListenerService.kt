@@ -13,7 +13,7 @@ import java.io.InputStream
 /**
  * PHONE side. The Data Layer wakes this service when the watch opens the audio channel.
  *
- * We process the stream with [runBlocking] — NOT a fire-and-forget coroutine. A WearableListenerService
+ * We process the stream with [runBlocking] - NOT a fire-and-forget coroutine. A WearableListenerService
  * is torn down within seconds of the callback returning, which would cancel any background coroutine
  * (observed: the pipeline died ~2s in). Blocking the callback for the whole session keeps the service
  * alive until the watch closes the channel. The callback runs on a Data Layer background thread, so
@@ -44,14 +44,8 @@ class WearAudioListenerService : WearableListenerService() {
 
     override fun onMessageReceived(event: MessageEvent) {
         when (event.path) {
-            Paths.LISTEN_START -> {
-                Log.i(TAG, "watch session start")
-                WatchSession.listening.value = true
-            }
-            Paths.LISTEN_STOP -> {
-                Log.i(TAG, "watch session stop")
-                WatchSession.listening.value = false
-            }
+            Paths.LISTEN_START -> WatchSession.listening.value = true
+            Paths.LISTEN_STOP -> WatchSession.listening.value = false
         }
     }
 

@@ -17,16 +17,16 @@ class PromptBuilderTest {
     @Test
     fun `bulgarian + Latin includes the explicit transliteration table`() {
         val out = buildPrompt("bg", ReplyScript.LATIN, context, transcript)
-        assertThat(out).contains("ж→zh")
-        assertThat(out).contains("ч→ch")
-        assertThat(out).contains("ъ→a")
+        assertThat(out).contains("ж->zh")
+        assertThat(out).contains("ч->ch")
+        assertThat(out).contains("ъ->a")
         assertThat(out).contains("Do NOT use Cyrillic")
     }
 
     @Test
     fun `non-bulgarian + Latin gives generic romanization instruction`() {
         val out = buildPrompt("ru", ReplyScript.LATIN, context, transcript)
-        assertThat(out).doesNotContain("ж→zh") // bulgarian-specific table only for bg
+        assertThat(out).doesNotContain("ж->zh") // bulgarian-specific table only for bg
         assertThat(out).contains("Latin letters")
         // Whitespace-insensitive check (the prompt is multi-line so the words can wrap):
         val flattened = out.replace(Regex("\\s+"), " ")
@@ -80,6 +80,6 @@ class PromptBuilderTest {
     fun `prompt enforces brevity in the reply`() {
         val out = buildPrompt("bg", ReplyScript.LATIN, context, transcript)
         assertThat(out).contains("SHORTEST possible")
-        assertThat(out).contains("1–3 words")
+        assertThat(out).contains("1-3 words")
     }
 }

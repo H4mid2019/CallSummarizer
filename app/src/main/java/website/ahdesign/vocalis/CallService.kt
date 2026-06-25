@@ -62,7 +62,7 @@ class CallService : Service() {
         startId: Int,
     ): Int {
         // Android 14+ requires RECORD_AUDIO to be granted BEFORE startForeground with
-        // FOREGROUND_SERVICE_TYPE_MICROPHONE — otherwise SecurityException. Bail cleanly.
+        // FOREGROUND_SERVICE_TYPE_MICROPHONE - otherwise SecurityException. Bail cleanly.
         if (!hasMicPermission()) {
             Log.w(TAG, "RECORD_AUDIO missing; aborting service start")
             stopSelf()
@@ -145,7 +145,7 @@ class CallService : Service() {
         if (record.state != AudioRecord.STATE_INITIALIZED) {
             Log.e(TAG, "AudioRecord uninitialized (mic busy / OEM restriction?)")
             runCatching { record.release() }
-            failStart("mic unavailable — busy?")
+            failStart("mic unavailable - busy?")
             return
         }
 

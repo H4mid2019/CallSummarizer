@@ -10,7 +10,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
-// Release signing — same keystore as :app (required for Data Layer pairing). Reads
+// Release signing - same keystore as :app (required for Data Layer pairing). Reads
 // keystore.properties (local) or VOCALIS_* env vars (CI).
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 val keystoreProperties =

@@ -2,21 +2,21 @@
 <resources>
     <string name="app_name">Vocalis</string>
     <string name="context_label">Call context</string>
-    <string name="context_helper">Anything that helps answer questions during the call — purpose of the call, your name, EGN/ID, address, account numbers, current plan, recent issues, etc. The more detail, the better the suggested replies.</string>
-    <string name="context_hint">e.g. Credit screening from Bank X. My name is …, EGN …, address …, monthly income …</string>
+    <string name="context_helper">Anything that helps answer questions during the call - purpose of the call, your name, EGN/ID, address, account numbers, current plan, recent issues, etc. The more detail, the better the suggested replies.</string>
+    <string name="context_hint">e.g. Credit screening from Bank X. My name is ..., EGN ..., address ..., monthly income ...</string>
     <string name="save_context">Save Context</string>
     <string name="context_saved">Context saved</string>
     <string name="test_start">Start listening</string>
     <string name="test_stop">Stop listening</string>
     <string name="test_hint">Listens to the phone mic and shows live replies. On a call, turn ON speakerphone.</string>
-    <string name="watch_listening">⌚ Watch is listening…</string>
+    <string name="watch_listening">Watch is listening</string>
     <string name="history_open">History</string>
     <string name="history_title">History</string>
     <string name="history_empty">No history yet. Use the watch to start a conversation.</string>
     <string name="history_clear">Clear history</string>
     <string name="history_clear_confirm">Delete all saved history? This can\'t be undone.</string>
     <string name="history_cleared">History cleared</string>
-    <string name="history_search_hint">Search by topic…</string>
+    <string name="history_search_hint">Search by topic...</string>
     <string name="history_untagged">Untagged</string>
     <string name="notif_stop_action">Stop</string>
 
@@ -32,7 +32,7 @@
     <string name="settings_openrouter_model">OpenRouter model</string>
     <string name="settings_openrouter_model_helper">e.g. openai/gpt-4o-mini, anthropic/claude-haiku-4-5, google/gemini-flash-1.5</string>
     <string name="settings_language">Language code (BCP-47)</string>
-    <string name="settings_language_helper">bg = Bulgarian, en = English, de = German, fr = French, ru = Russian, fa = Persian, …</string>
+    <string name="settings_language_helper">bg = Bulgarian, en = English, de = German, fr = French, ru = Russian, fa = Persian, ...</string>
     <string name="settings_section_script">Reply script</string>
     <string name="settings_reply_script">Output letters</string>
     <string name="settings_reply_script_helper">Latin reads phonetically (good for Bulgarian if you don\'t read Cyrillic). Native = same script as the source language.</string>
@@ -40,12 +40,12 @@
     <string name="settings_saved">Settings saved</string>
     <string name="keys_missing_toast">Add your API keys in Settings first</string>
     <string name="usage_hint">Tap Start listening to begin, or use the watch app for in-person conversations. On a phone call, turn ON speakerphone.</string>
-    <string name="overlay_waiting">Listening…</string>
-    <string name="overlay_muted_by_os">OS muted mic — phone call holds it exclusively</string>
+    <string name="overlay_waiting">Listening...</string>
+    <string name="overlay_muted_by_os">OS muted mic - phone call holds it exclusively</string>
     <string name="label_heard">Heard</string>
     <string name="label_means">Means</string>
     <string name="label_say">Say</string>
     <string name="notif_title">Call Monitoring Active</string>
-    <string name="notif_text">Listening for questions…</string>
+    <string name="notif_text">Listening for questions...</string>
     <string name="notif_channel_name">Call Service</string>
 </resources>

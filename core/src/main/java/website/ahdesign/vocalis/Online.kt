@@ -64,13 +64,6 @@ fun openDeepgramSocket(
     return client.newWebSocket(
         request,
         object : WebSocketListener() {
-            override fun onOpen(
-                webSocket: WebSocket,
-                response: Response,
-            ) {
-                Log.i(TAG, "Deepgram WS opened (HTTP ${response.code})")
-            }
-
             override fun onMessage(
                 webSocket: WebSocket,
                 text: String,
@@ -86,22 +79,6 @@ fun openDeepgramSocket(
                 if (transcript.isNotBlank()) onTranscript(transcript, json.optBoolean("is_final"))
             }
 
-            override fun onClosing(
-                webSocket: WebSocket,
-                code: Int,
-                reason: String,
-            ) {
-                Log.i(TAG, "Deepgram WS closing code=$code reason=$reason")
-            }
-
-            override fun onClosed(
-                webSocket: WebSocket,
-                code: Int,
-                reason: String,
-            ) {
-                Log.i(TAG, "Deepgram WS closed code=$code reason=$reason")
-            }
-
             override fun onFailure(
                 webSocket: WebSocket,
                 t: Throwable,
@@ -114,7 +91,7 @@ fun openDeepgramSocket(
 }
 
 /**
- * One OpenRouter chat completion. Blocking — call from an IO dispatcher. Returns the parsed
+ * One OpenRouter chat completion. Blocking - call from an IO dispatcher. Returns the parsed
  * {translation, reply}; throws [IllegalStateException] on a non-2xx response.
  */
 fun callOpenRouter(

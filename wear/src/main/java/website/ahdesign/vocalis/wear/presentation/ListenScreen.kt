@@ -31,7 +31,7 @@ import website.ahdesign.vocalis.wear.data.PhoneBridge
 
 /**
  * Round-screen UI. Top: a button + the latest exchange (big, readable). Below: a short scroll of
- * recent turns. The reply ("Say this") is the largest element — it's the actionable bit.
+ * recent turns. The reply ("Say this") is the largest element - it's the actionable bit.
  */
 @Composable
 fun ListenScreen(
@@ -63,13 +63,13 @@ fun ListenScreen(
     ) {
         item {
             if (listening) {
-                // While listening, the button IS the indicator: "● Listening…" with a small "Stop".
+                // While listening the button shows the state plus a small Stop.
                 Button(
                     onClick = onClick,
                     modifier = Modifier.fillMaxWidth(0.85f).height(40.dp),
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("● Listening…", style = MaterialTheme.typography.caption1)
+                        Text("Listening", style = MaterialTheme.typography.caption1)
                         Spacer(Modifier.width(6.dp))
                         Text("Stop", style = MaterialTheme.typography.caption3)
                     }

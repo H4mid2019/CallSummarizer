@@ -43,7 +43,7 @@ class OverlayManager(
                 windowManager.addView(b.root, params)
             } catch (e: WindowManager.BadTokenException) {
                 // Overlay permission revoked between the manifest grant and now.
-                Log.e("OverlayManager", "addView denied — overlay permission missing?", e)
+                Log.e("OverlayManager", "addView denied - overlay permission missing?", e)
                 binding = null
             }
         }

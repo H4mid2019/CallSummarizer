@@ -10,12 +10,12 @@ import java.io.InputStream
 /**
  * On-device (no internet) path. Two strategies, picked by what's downloaded/feasible:
  *
- *  A) OFFLINE_GEMMA — gemma-4-e4b-it (the model Google AI Edge Gallery runs). It's natively
+ *  A) OFFLINE_GEMMA - gemma-4-e4b-it (the model Google AI Edge Gallery runs). It's natively
  *     multimodal incl. AUDIO, so one model does ASR + translation + a short reply. Run via the
  *     LiteRT-LM Kotlin API (preferred) or MediaPipe LLM Inference. Needs a capable phone and a
- *     downloaded model file. gemma-4-e4b-it is pretrained on 140+ languages — hence solid Bulgarian.
+ *     downloaded model file. gemma-4-e4b-it is pretrained on 140+ languages - hence solid Bulgarian.
  *
- *  B) OFFLINE_MLKIT — lighter fallback: on-device ASR (bundled Whisper, or SpeechRecognizer if a
+ *  B) OFFLINE_MLKIT - lighter fallback: on-device ASR (bundled Whisper, or SpeechRecognizer if a
  *     `bg` pack exists) -> ML Kit on-device translation (Bulgarian supported) -> a short reply.
  */
 class OnDeviceEngine(

@@ -4,7 +4,7 @@ import kotlin.math.sqrt
 
 /**
  * RMS of a 16-bit little-endian PCM byte buffer. Returns 0.0 for empty/odd-length input.
- * Pure function — shared by the phone call path and the watch capture path.
+ * Pure function - shared by the phone call path and the watch capture path.
  */
 fun rms(
     buffer: ByteArray,

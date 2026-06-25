@@ -1,13 +1,13 @@
 # Task: wire the on-device (offline) engine
 
-Status: **not started** — `OnDeviceEngine` compiles but only logs; the online path is done.
+Status: **not started** - `OnDeviceEngine` compiles but only logs; the online path is done.
 Owner file: [app/src/main/java/website/ahdesign/vocalis/companion/offline/OnDeviceEngine.kt](../app/src/main/java/website/ahdesign/vocalis/companion/offline/OnDeviceEngine.kt)
 
 ## Goal
 
 When there's no internet, the phone (the "brain") transcribes + translates + suggests a short reply
 **on-device**, so the watch still works in a shop with no signal. Output must be the same
-`Turn { heard, meaning, reply, engine, tsEpochMs }` the online path emits — the watch UI is already
+`Turn { heard, meaning, reply, engine, tsEpochMs }` the online path emits - the watch UI is already
 engine-agnostic, so nothing on the watch changes.
 
 ## How it plugs in (already built)
@@ -17,31 +17,31 @@ then calls `OnDeviceEngine.process(pcm, engine, onTurn)`. So this task is **only
 `processGemma()` and `processMlKit()` to consume the PCM `InputStream` and call `onTurn(Turn(...))`.
 Reuse `parseLlmAnswer()` from `:core` so the model's JSON is parsed exactly like OpenRouter's.
 
-## Strategy A — gemma-4-e4b-it (primary)
+## Strategy A - gemma-4-e4b-it (primary)
 
 The model from Google AI Edge Gallery. Multimodal **including audio**, pretrained on 140+ languages
 (strong Bulgarian), so one model does ASR + translation + reply.
 
 - **Runtime:** LiteRT-LM Kotlin API (preferred; MediaPipe LLM Inference is maintenance-mode).
   Candidate dep: `com.google.mediapipe:tasks-genai:<latest>` (MediaPipe LLM Inference) or the
-  LiteRT-LM artifact — verify the current name/version against the docs before adding.
+  LiteRT-LM artifact - verify the current name/version against the docs before adding.
 - **Model file:** `gemma-4-e4b-it` in `.litertlm` (or `.task`) format, downloaded into
   `context.filesDir` as `gemma-4-e4b-it.litertlm` (the path `OnDeviceEngine.gemmaReady()` already
-  checks). Add a one-time downloader (with progress) — the file is hundreds of MB; require Wi-Fi.
+  checks). Add a one-time downloader (with progress) - the file is hundreds of MB; require Wi-Fi.
 - **Init:** lazily create the LLM inference session pointing at the model file; reuse across turns.
 - **Per utterance:** chunk the PCM by simple VAD (or fixed windows), feed each as **audio input**
   with a prompt asking for `{transcript, translation, short reply + phonetic}` as JSON. Parse with
   `parseLlmAnswer` (extend it if a `transcript` field is added), then `onTurn(...)`.
 - **Risks:** needs a capable phone (RAM/NPU); first token latency; model download size/UX.
 
-## Strategy B — ML Kit translate (lighter fallback)
+## Strategy B - ML Kit translate (lighter fallback)
 
 When running a full LLM is too slow / not downloaded.
 
 - **ASR:** bundled Whisper (`whisper.cpp`/tflite) or Android on-device `SpeechRecognizer` **if** a
-  `bg` pack exists (often it doesn't — Whisper is the reliable route for Bulgarian).
+  `bg` pack exists (often it doesn't - Whisper is the reliable route for Bulgarian).
 - **Translate:** ML Kit on-device, Bulgarian supported.
-  `com.google.mlkit:translate:<latest>`, `TranslateLanguage.BULGARIAN` → user's language;
+  `com.google.mlkit:translate:<latest>`, `TranslateLanguage.BULGARIAN` -> user's language;
   `translator.downloadModelIfNeeded()` once.
 - **Reply:** a small on-device LLM or a phrasebook/template keyed by intent; keep it short.
 - **Risks:** Bulgarian offline ASR is the weak link; reply quality lower than Gemma.

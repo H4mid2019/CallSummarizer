@@ -4,5 +4,5 @@
     <string name="notif_channel_name">Listening</string>
     <string name="notif_title">Vocalis is listening</string>
     <string name="tap_to_listen">Tap to listen</string>
-    <string name="listening">Listening…</string>
+    <string name="listening">Listening...</string>
 </resources>

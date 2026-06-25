@@ -5,8 +5,8 @@ the phone with the **Start listening** button, and the watch with **tap to liste
 
 ## Signing
 
-Both APKs are signed with **one release keystore** (`vocalis-release.jks`, gitignored) — the same key
-+ `applicationId` is required for the Data Layer to pair phone↔watch and for installs to persist.
+Both APKs are signed with **one release keystore** (`vocalis-release.jks`, gitignored) - the same key
++ `applicationId` is required for the Data Layer to pair phone<->watch and for installs to persist.
 Local builds read `keystore.properties` (gitignored); CI reads `VOCALIS_*` env vars from secrets.
 
 `keytool` command used to create it (validity ~27 years):
@@ -14,7 +14,7 @@ Local builds read `keystore.properties` (gitignored); CI reads `VOCALIS_*` env v
 keytool -genkeypair -keystore vocalis-release.jks -alias vocalis -keyalg RSA -keysize 2048 \
         -validity 10000 -storepass <pw> -keypass <pw> -dname "CN=Vocalis, O=Vocalis, C=BG"
 ```
-Keep `vocalis-release.jks` + `keystore.properties` safe and backed up — losing the key means you
+Keep `vocalis-release.jks` + `keystore.properties` safe and backed up - losing the key means you
 can't update an installed app (you'd have to uninstall + reinstall).
 
 ## Build signed APKs locally
@@ -36,15 +36,15 @@ adb -s <phone>  install -r app/build/outputs/apk/release/app-release.apk
 adb -s <watch>  install -r wear/build/outputs/apk/release/wear-release.apk
 ```
 
-## CI release (GitHub Actions → GitHub Release)
+## CI release (GitHub Actions -> GitHub Release)
 
 `.github/workflows/release.yml` builds both signed APKs and attaches them to a GitHub Release.
 
-1. Add repo **secrets** (Settings → Secrets and variables → Actions):
-   - `KEYSTORE_BASE64` — base64 of the keystore. On Windows PowerShell:
+1. Add repo **secrets** (Settings -> Secrets and variables -> Actions):
+   - `KEYSTORE_BASE64` - base64 of the keystore. On Windows PowerShell:
      `[Convert]::ToBase64String([IO.File]::ReadAllBytes("vocalis-release.jks"))`
-   - `KEYSTORE_PASSWORD`, `KEY_PASSWORD` — from `keystore.properties`
-   - `KEY_ALIAS` — `vocalis`
+   - `KEYSTORE_PASSWORD`, `KEY_PASSWORD` - from `keystore.properties`
+   - `KEY_ALIAS` - `vocalis`
 2. Tag a release: `git tag v1.0.0 && git push origin v1.0.0`.
 3. The workflow publishes a Release with `vocalis-phone.apk` + `vocalis-watch.apk` attached.
    (A manual `workflow_dispatch` run just uploads them as build artifacts.)
@@ -53,7 +53,7 @@ Tip: install on the phone with **Obtainium** pointed at the GitHub repo for one-
 
 ## F-Droid / Play Store
 
-- **F-Droid:** not possible — it's FOSS-only and rejects Google Play Services (the watch needs
+- **F-Droid:** not possible - it's FOSS-only and rejects Google Play Services (the watch needs
   `play-services-wearable`).
 - **Play Store:** possible but heavy ($25 account + review; audio permissions get scrutiny). Use the
   internal-testing track at most. Sideloading is simpler for personal use.

@@ -19,7 +19,7 @@ object AudioSpec {
     const val CHANNELS = 1
 }
 
-/** Which engine produced a result — surfaced subtly in the UI so the user knows when offline. */
+/** Which engine produced a result - surfaced subtly in the UI so the user knows when offline. */
 enum class Engine { ONLINE, OFFLINE_GEMMA, OFFLINE_MLKIT }
 
 /**

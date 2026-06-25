@@ -37,7 +37,7 @@ internal val LANGUAGE_NAMES: Map<String, String> =
 
 /**
  * Build the LLM prompt for one transcript turn. Language-aware and script-aware.
- * Pure function — shared by the phone call path and the watch in-person path.
+ * Pure function - shared by the phone call path and the watch in-person path.
  */
 fun buildPrompt(
     lang: String,
@@ -53,8 +53,8 @@ fun buildPrompt(
                 if (lang == "bg") {
                     """
                     - Write the reply in Latin letters (Romanized $langName) so the user can read it phonetically.
-                    - Use this transliteration: ж→zh, ч→ch, ш→sh, щ→sht, ц→ts, й→y, ю→yu, я→ya, ъ→a.
-                      Example: "Добър ден, Иван съм" → "Dobar den, Ivan sam".
+                    - Use this transliteration: ж->zh, ч->ch, ш->sh, щ->sht, ц->ts, й->y, ю->yu, я->ya, ъ->a.
+                      Example: "Добър ден, Иван съм" -> "Dobar den, Ivan sam".
                     - Do NOT use Cyrillic.
                     """.trimIndent()
                 } else {
@@ -78,7 +78,7 @@ fun buildPrompt(
     return """
         You are helping a non-$langName speaker survive a $langName phone call in real time.
         The other party always speaks $langName. Use the user's context to answer accurately
-        when the caller asks about the user (name, ID, address, accounts, situation, …).
+        when the caller asks about the user (name, ID, address, accounts, situation, ...).
 
         User context:
         $userContext
@@ -91,10 +91,10 @@ fun buildPrompt(
           "reply":       the SHORTEST possible $langName reply the user can say.
 
         Reply rules:
-        - Be as short as humanly possible. Prefer 1–3 words.
+        - Be as short as humanly possible. Prefer 1-3 words.
           Use one-word replies when sufficient: yes/no/thanks/one moment/I understand.
         - Only go longer when actual information must be conveyed (name, ID, amount, address).
-          Even then, no filler — just the fact.
+          Even then, no filler - just the fact.
         $scriptInstruction
         - No quotes, no parentheses, no explanation in the reply.
 

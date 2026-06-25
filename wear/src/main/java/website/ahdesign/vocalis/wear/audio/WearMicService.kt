@@ -12,7 +12,6 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.IBinder
-import android.os.SystemClock
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
@@ -87,7 +86,6 @@ class WearMicService : Service() {
                     return@launch
                 }
 
-            Log.i(TAG, "streaming to phone node=$phoneNodeId")
             Wearable
                 .getMessageClient(this@WearMicService)
                 .sendMessage(phoneNodeId, Paths.LISTEN_START, ByteArray(0))
@@ -95,7 +93,6 @@ class WearMicService : Service() {
             val ch = channelClient.openChannel(phoneNodeId, Paths.AUDIO_CHANNEL).await()
             channel = ch
             val out: OutputStream = channelClient.getOutputStream(ch).await()
-            Log.i(TAG, "audio channel open; capturing mic")
 
             val minBuf =
                 AudioRecord.getMinBufferSize(
@@ -118,43 +115,15 @@ class WearMicService : Service() {
             try {
                 record.startRecording()
                 val buffer = ByteArray(bufSize)
-                var readFrames = 0
-                var sentFrames = 0
-                var maxRms = 0.0
-                var lastLog = SystemClock.elapsedRealtime()
                 while (streaming.get()) {
                     val read = record.read(buffer, 0, buffer.size)
                     when {
-                        read > 0 -> {
-                            readFrames++
-                            val level = rms(buffer, read)
-                            if (level > maxRms) maxRms = level
-                            if (level >= SILENCE_RMS_FLOOR) {
-                                out.write(buffer, 0, read)
-                                sentFrames++
-                            }
-                            val now = SystemClock.elapsedRealtime()
-                            if (now - lastLog >= LOG_INTERVAL_MS) {
-                                Log.v(
-                                    TAG,
-                                    "mic: read=$readFrames sent=$sentFrames " +
-                                        "maxRms=${"%.0f".format(maxRms)} (floor=$SILENCE_RMS_FLOOR)",
-                                )
-                                readFrames = 0
-                                sentFrames = 0
-                                maxRms = 0.0
-                                lastLog = now
-                            }
-                        }
-                        read < 0 -> {
-                            Log.w(TAG, "AudioRecord.read error=$read")
-                            break
-                        }
+                        read > 0 -> if (rms(buffer, read) >= SILENCE_RMS_FLOOR) out.write(buffer, 0, read)
+                        read < 0 -> break
                     }
                 }
-            } catch (e: Exception) {
-                // Includes ChannelIOException when the phone closes the channel (e.g. on Stop).
-                Log.w(TAG, "capture loop ended", e)
+            } catch (ignored: Exception) {
+                // ChannelIOException when the phone closes the channel (expected on Stop).
             } finally {
                 runCatching { record.stop() }
                 runCatching { record.release() }
@@ -212,7 +181,6 @@ class WearMicService : Service() {
         const val ACTION_STOP = "WEAR_LISTEN_STOP"
         private const val NOTIFICATION_ID = 42
         private const val MIN_BUFFER_BYTES = 4096
-        private const val LOG_INTERVAL_MS = 2000L
         private const val CHANNEL_ID = "WearListenChannel"
         private const val TAG = "WearMicService"
     }
