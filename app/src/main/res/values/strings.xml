@@ -6,9 +6,9 @@
     <string name="context_hint">e.g. Credit screening from Bank X. My name is …, EGN …, address …, monthly income …</string>
     <string name="save_context">Save Context</string>
     <string name="context_saved">Context saved</string>
-    <string name="test_start">Start listening (test)</string>
+    <string name="test_start">Start listening</string>
     <string name="test_stop">Stop listening</string>
-    <string name="test_hint">Test mode listens to the mic outside of a call so you can verify the pipeline.</string>
+    <string name="test_hint">Listens to the phone mic and shows live replies. On a call, turn ON speakerphone.</string>
     <string name="watch_listening">⌚ Watch is listening…</string>
     <string name="history_open">History</string>
     <string name="history_title">History</string>
@@ -39,7 +39,7 @@
     <string name="settings_save">Save</string>
     <string name="settings_saved">Settings saved</string>
     <string name="keys_missing_toast">Add your API keys in Settings first</string>
-    <string name="usage_hint">The app will automatically start listening when you pick up a call. Remember to turn ON speakerphone for the best results.</string>
+    <string name="usage_hint">Tap Start listening to begin, or use the watch app for in-person conversations. On a phone call, turn ON speakerphone.</string>
     <string name="overlay_waiting">Listening…</string>
     <string name="overlay_muted_by_os">OS muted mic — phone call holds it exclusively</string>
     <string name="label_heard">Heard</string>

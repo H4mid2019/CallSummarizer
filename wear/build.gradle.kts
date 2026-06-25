@@ -1,3 +1,5 @@
+import java.util.Properties
+
 // Wear OS app. AGP + Kotlin plugin versions come from :app's classpath (declared once there), so
 // they're applied here without a version. The Compose compiler plugin is NOT used by :app, so it
 // must carry its version here.
@@ -7,6 +9,21 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
 }
+
+// Release signing — same keystore as :app (required for Data Layer pairing). Reads
+// keystore.properties (local) or VOCALIS_* env vars (CI).
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties =
+    Properties().apply {
+        if (keystorePropertiesFile.exists()) keystorePropertiesFile.inputStream().use { load(it) }
+    }
+
+fun releaseProp(
+    key: String,
+    env: String,
+): String? = keystoreProperties.getProperty(key) ?: System.getenv(env)
+
+val releaseStoreFile = releaseProp("storeFile", "VOCALIS_STORE_FILE")
 
 android {
     namespace = "website.ahdesign.vocalis.wear"
@@ -21,9 +38,22 @@ android {
         versionName = "0.1"
     }
 
+    signingConfigs {
+        create("release") {
+            if (releaseStoreFile != null) {
+                storeFile = rootProject.file(releaseStoreFile)
+                storePassword = releaseProp("storePassword", "VOCALIS_STORE_PASSWORD")
+                keyAlias = releaseProp("keyAlias", "VOCALIS_KEY_ALIAS")
+                keyPassword = releaseProp("keyPassword", "VOCALIS_KEY_PASSWORD")
+            }
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
+            if (releaseStoreFile != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 

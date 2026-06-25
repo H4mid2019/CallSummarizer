@@ -19,11 +19,9 @@
     <ID>MagicNumber:MainActivity.kt$MainActivity$300</ID>
     <ID>MagicNumber:OverlayManager.kt$OverlayManager$100</ID>
     <ID>MaxLineLength:MainActivity.kt$MainActivity$private fun hasRecordAudio(): Boolean</ID>
-    <ID>ReturnCount:CallReceiver.kt$CallReceiver$override fun onReceive( context: Context, intent: Intent, )</ID>
     <ID>ReturnCount:CallService.kt$CallService$@android.annotation.SuppressLint("MissingPermission") // RECORD_AUDIO is verified in onStartCommand private fun startRecording()</ID>
     <ID>ReturnCount:CallService.kt$CallService$override fun onStartCommand( intent: Intent?, flags: Int, startId: Int, ): Int</ID>
     <ID>ReturnCount:MainActivity.kt$MainActivity$private fun toggleTestSession()</ID>
-    <ID>TooGenericExceptionCaught:CallReceiver.kt$CallReceiver$e: Exception</ID>
     <ID>TooGenericExceptionCaught:CallService.kt$CallService$e: Exception</ID>
     <ID>TooManyFunctions:CallService.kt$CallService : Service</ID>
     <ID>UseCheckOrError:CallService.kt$CallService$throw IllegalStateException("OpenRouter HTTP ${response.code}")</ID>
