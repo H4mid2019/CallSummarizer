@@ -1,6 +1,6 @@
-# Vocalis
+# SayBack
 
-Vocalis helps you take part in Bulgarian conversations when your Bulgarian is
+SayBack helps you take part in Bulgarian conversations when your Bulgarian is
 limited. It listens to speech, transcribes it, translates it, and suggests a
 short reply you can say back.
 

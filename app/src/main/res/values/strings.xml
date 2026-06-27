@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Vocalis</string>
+    <string name="app_name">SayBack</string>
     <string name="context_label">Call context</string>
     <string name="context_helper">Anything that helps answer questions during the call - purpose of the call, your name, EGN/ID, address, account numbers, current plan, recent issues, etc. The more detail, the better the suggested replies.</string>
     <string name="context_hint">e.g. Credit screening from Bank X. My name is ..., EGN ..., address ..., monthly income ...</string>

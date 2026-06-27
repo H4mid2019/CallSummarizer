@@ -1,4 +1,4 @@
-# Vocalis Wear - in-person assistant
+# SayBack Wear - in-person assistant
 
 A Wear OS companion to the phone app. Raise your wrist in a shop / café / office, **tap the mic**,
 and the watch shows what the other person (Bulgarian) said, what it means, and a **short, easy reply

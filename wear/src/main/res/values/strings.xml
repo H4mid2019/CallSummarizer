@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Vocalis Watch</string>
+    <string name="app_name">SayBack Watch</string>
     <string name="notif_channel_name">Listening</string>
     <string name="notif_title">Vocalis is listening</string>
     <string name="tap_to_listen">Tap to listen</string>

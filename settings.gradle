@@ -25,7 +25,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Vocalis"
+rootProject.name = "SayBack"
 include ':app'
 include ':core'
 include ':wear'
